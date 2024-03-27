@@ -35,21 +35,13 @@ class Utils {
                     if (status) {
                         console.info(
                             displayColors ? '\x1b[31m%s\x1b[0m' : '%s',
-                            '<--------------' +
-                                identifier +
-                                '--------------' +
-                                i +
-                                '-------------->',
+                            '<--------------' + identifier + '--------------' + i + '-------------->',
                             obj
                         );
                     } else {
                         console.error(
                             displayColors ? '\x1b[31m%s\x1b[0m' : '%s',
-                            '<--------------' +
-                                identifier +
-                                '--------------' +
-                                i +
-                                '-------------->',
+                            '<--------------' + identifier + '--------------' + i + '-------------->',
                             obj
                         );
                     }
@@ -57,17 +49,9 @@ class Utils {
                 return;
             } else {
                 if (status) {
-                    console.info(
-                        displayColors ? '\x1b[31m%s\x1b[0m' : '%s',
-                        '<--------------' + identifier + '-------------->',
-                        value
-                    );
+                    console.info(displayColors ? '\x1b[31m%s\x1b[0m' : '%s', '<--------------' + identifier + '-------------->', value);
                 } else {
-                    console.error(
-                        displayColors ? '\x1b[31m%s\x1b[0m' : '%s',
-                        '<--------------' + identifier + '-------------->',
-                        value
-                    );
+                    console.error(displayColors ? '\x1b[31m%s\x1b[0m' : '%s', '<--------------' + identifier + '-------------->', value);
                 }
                 return;
             }

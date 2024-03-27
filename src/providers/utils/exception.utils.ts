@@ -9,9 +9,7 @@ export class ExceptionHandler {
 
     getError() {
         return {
-            code:
-                this.getStatusCode(<keyof typeof HttpStatusCode>this.status) ||
-                HttpStatusCode.BAD_REQUEST,
+            code: this.getStatusCode(<keyof typeof HttpStatusCode>this.status) || HttpStatusCode.BAD_REQUEST,
             status: this.status || HttpStatusMessage.BAD_REQUEST,
             message: this.message || HttpStatusMessage.BAD_REQUEST,
             data: this.data,
@@ -56,10 +54,7 @@ export class UnauthorizedException extends ExceptionHandler {
 }
 
 export class LoginException extends ExceptionHandler {
-    constructor(
-        error: AcceptNullOrObject,
-        status: HttpStatusMessage = HttpStatusMessage.BAD_REQUEST
-    ) {
+    constructor(error: AcceptNullOrObject, status: HttpStatusMessage = HttpStatusMessage.BAD_REQUEST) {
         super();
         this.data = error;
         this.status = status;

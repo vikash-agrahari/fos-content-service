@@ -35,7 +35,6 @@ export const NODEMAILER_CONFIG = {
     },
 };
 
-
 export const SERVER = {
     DISPLAY_COLOUR: true,
     BY_PASS_OTP: 1212,

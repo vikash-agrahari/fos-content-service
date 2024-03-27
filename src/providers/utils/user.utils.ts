@@ -11,10 +11,7 @@ import { utils } from './utils';
 /** get adminId from permission token */
 export const localsUserId = async function (userData: string) {
     if (!userData) {
-        throw new CustomException(
-            ExceptionMessage.MISSING_PERMISSION_TOKEN,
-            HttpStatusMessage.UNAUTHORIZED
-        ).getError();
+        throw new CustomException(ExceptionMessage.MISSING_PERMISSION_TOKEN, HttpStatusMessage.UNAUTHORIZED).getError();
     } else {
         try {
             let encryptData = JSON.parse(userData);
@@ -30,10 +27,7 @@ export const localsUserId = async function (userData: string) {
 /** get AdminData from permission token */
 export const localsUserData = async function (userData: string) {
     if (!userData) {
-        throw new CustomException(
-            ExceptionMessage.MISSING_PERMISSION_TOKEN,
-            HttpStatusMessage.UNAUTHORIZED
-        ).getError();
+        throw new CustomException(ExceptionMessage.MISSING_PERMISSION_TOKEN, HttpStatusMessage.UNAUTHORIZED).getError();
     } else {
         try {
             let encryptData = JSON.parse(userData);

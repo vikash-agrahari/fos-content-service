@@ -69,11 +69,7 @@ export class ResponseUtils {
             error: error.data || error,
         };
         if (ErrorResponse.code.toString().length > 3) {
-            utils.consolelog(
-                '********************* INTERNAL SERVER ERROR *************************',
-                ErrorResponse,
-                false
-            );
+            utils.consolelog('********************* INTERNAL SERVER ERROR *************************', ErrorResponse, false);
             status = HttpStatusMessage.INTERNAL_SERVER_ERROR;
             message = ExceptionMessage.INTERNAL_SERVER_ERROR;
             ErrorResponse = {
@@ -96,10 +92,7 @@ export class ResponseUtils {
      * @param {string} statusMsg Status Msg for Response
      * @returns {HttpResponse} Response Object
      */
-    grpcSuccessResponse(
-        data: Record<string, AcceptAny>,
-        status: HttpStatusMessage = HttpStatusMessage.OK
-    ): GrpcResponse {
+    grpcSuccessResponse(data: Record<string, AcceptAny>, status: HttpStatusMessage = HttpStatusMessage.OK): GrpcResponse {
         const response: GrpcResponse = {
             code: this.getStatusCode(<keyof typeof HttpStatusCode>status),
             status: status,
@@ -117,10 +110,7 @@ export class ResponseUtils {
      * @param {string} statusMsg Status Msg for Response
      * @returns {HttpResponse} Error Response Object
      */
-    grpcErrorResponse(
-        error: AcceptAny,
-        status: HttpStatusMessage = HttpStatusMessage.BAD_REQUEST
-    ): GrpcResponse {
+    grpcErrorResponse(error: AcceptAny, status: HttpStatusMessage = HttpStatusMessage.BAD_REQUEST): GrpcResponse {
         const ErrorResponse: GrpcResponse = {
             code: this.getStatusCode(<keyof typeof HttpStatusCode>status),
             status: status,
