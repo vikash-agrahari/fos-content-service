@@ -1,0 +1,5 @@
+{
+	"SOMETHING_WENT_WRONG": "Algo salió mal",
+	"FILE_ERROR": "Archivo no encontrado",
+	"INTERNAL_SERVER_ERROR": "Error interno del servidor, por favor, contacte al administrador."
+}

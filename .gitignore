@@ -1,0 +1,20 @@
+# Distribution files
+dist/
+
+# Swagger API documentation files
+swagger/
+
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Editor settings
+.vscode/
+
+# Package lock file
+package-lock.json
+
+# macOS system files
+.DS_Store
