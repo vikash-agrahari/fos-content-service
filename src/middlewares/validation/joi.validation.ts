@@ -42,4 +42,52 @@ export const JOI_VALIDATION = {
             type: Joi.number().required(),
         },
     },
+    CONTENT: {
+        POST: {
+            CREATE: {
+                postUUID: Joi.string().required(),
+                pictureUrls: Joi.array().items(Joi.string()).required(),
+                videoUrls: Joi.array().items(Joi.string()),
+                userID: Joi.string().required(),
+                caption: Joi.string(),
+                hashTags: Joi.array().items(Joi.string()).max(6).optional(),
+                taggedUsers: Joi.array()
+                    .items(
+                        Joi.object({
+                            userId: Joi.string().required(),
+                            profileImage: Joi.string().required(),
+                            name: Joi.string().required(),
+                            username: Joi.string().required(),
+                        }).required()
+                    )
+                    .required(),
+                visibility: Joi.number().required(),
+                underEighteen: Joi.boolean().required(),
+                warning: Joi.array().items(Joi.number()),
+                categories: Joi.array()
+                    .items(
+                        Joi.object({
+                            _id: Joi.string().required(),
+                            categoryName: Joi.string().required(),
+                        }).required()
+                    )
+                    .required(),
+                season: Joi.object({
+                    _id: Joi.string().optional(),
+                    seasonName: Joi.string().required(),
+                    monetisationsEnabled: Joi.boolean().optional(),
+                    amount: Joi.number().optional(),
+                }).allow(null),
+                textCommentsEnabled: Joi.boolean().required(),
+                voiceComments: Joi.object({
+                    enabled: Joi.boolean().required(),
+                    amount: Joi.number().required(),
+                }).required(),
+                doubleMonetisations: Joi.object({
+                    enabled: Joi.boolean().required(),
+                    amount: Joi.number().required(),
+                }).required(),
+            },
+        },
+    },
 };

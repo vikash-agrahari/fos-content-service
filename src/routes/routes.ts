@@ -38,8 +38,8 @@ class Routes {
      * @description Load All Routes
      */
     loadAllRoutes() {
-        // this.route.use('/v1', routesV1.loadAllRoutes());
-        // return this.route;
+        this.route.use('/v1', routesV1.loadAllRoutes());
+        return this.route;
     }
 }
 

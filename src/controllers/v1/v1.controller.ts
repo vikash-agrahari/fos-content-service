@@ -1,1 +1,1 @@
-// export { homeControllerV1 } from './home.controller';
+export { contentPostControllerV1 } from './content-post.controller';
