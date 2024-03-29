@@ -25,6 +25,11 @@ class HashTagEntity extends BaseEntity {
         const result = await this.findOneAndUpdate({ _id: id }, { $inc: { count: 1 } }, { new: true });
         return result;
     }
+
+    async decrementTagCount(id: string) {
+        const result = await this.findOneAndUpdate({ _id: id }, { $inc: { count: -1 } }, { new: true });
+        return result;
+    }
 }
 
 export const hashTagEntityV1 = new HashTagEntity();

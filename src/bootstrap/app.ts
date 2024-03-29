@@ -39,7 +39,7 @@ export class App {
      * @description Load All Routes
      */
     private loadRoutes() {
-        this.app.use(this.contextPath, routes.loadAllRoutes());
+        this.app.use('/', routes.loadAllRoutes());
         this.app.use(InvalidRoute);
     }
 

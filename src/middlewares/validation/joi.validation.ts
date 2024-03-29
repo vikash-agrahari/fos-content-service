@@ -45,16 +45,16 @@ export const JOI_VALIDATION = {
     CONTENT: {
         POST: {
             CREATE: {
-                postUUID: Joi.string().required(),
+                postUUID: Joi.string().length(36).required(),
                 pictureUrls: Joi.array().items(Joi.string()).required(),
                 videoUrls: Joi.array().items(Joi.string()),
-                userID: Joi.string().required(),
+                userID: Joi.string().length(24).required(),
                 caption: Joi.string(),
                 hashTags: Joi.array().items(Joi.string()).max(6).optional(),
                 taggedUsers: Joi.array()
                     .items(
                         Joi.object({
-                            userId: Joi.string().required(),
+                            userId: Joi.string().length(24).required(),
                             profileImage: Joi.string().required(),
                             name: Joi.string().required(),
                             username: Joi.string().required(),
@@ -67,13 +67,13 @@ export const JOI_VALIDATION = {
                 categories: Joi.array()
                     .items(
                         Joi.object({
-                            _id: Joi.string().required(),
+                            _id: Joi.string().length(24).required(),
                             categoryName: Joi.string().required(),
                         }).required()
                     )
                     .required(),
                 season: Joi.object({
-                    _id: Joi.string().optional(),
+                    _id: Joi.string().length(24).optional(),
                     seasonName: Joi.string().required(),
                     monetisationsEnabled: Joi.boolean().optional(),
                     amount: Joi.number().optional(),
@@ -87,6 +87,42 @@ export const JOI_VALIDATION = {
                     enabled: Joi.boolean().required(),
                     amount: Joi.number().required(),
                 }).required(),
+            },
+            EDIT: {
+                caption: Joi.string(),
+                hashTags: Joi.array().items(Joi.string()).max(6),
+                taggedUsers: Joi.array().items(
+                    Joi.object({
+                        userId: Joi.string().length(24).required(),
+                        profileImage: Joi.string().required(),
+                        name: Joi.string().required(),
+                        username: Joi.string().required(),
+                    }).required()
+                ),
+                visibility: Joi.number(),
+                underEighteen: Joi.boolean(),
+                warning: Joi.array().items(Joi.number()),
+                categories: Joi.array().items(
+                    Joi.object({
+                        _id: Joi.string().length(24).required(),
+                        categoryName: Joi.string().required(),
+                    }).required()
+                ),
+                season: Joi.object({
+                    _id: Joi.string().length(24),
+                    seasonName: Joi.string().required(),
+                    monetisationsEnabled: Joi.boolean(),
+                    amount: Joi.number(),
+                }).allow(null),
+                textCommentsEnabled: Joi.boolean(),
+                voiceComments: Joi.object({
+                    enabled: Joi.boolean().required(),
+                    amount: Joi.number().required(),
+                }),
+                doubleMonetisations: Joi.object({
+                    enabled: Joi.boolean().required(),
+                    amount: Joi.number().required(),
+                }),
             },
         },
     },

@@ -24,24 +24,20 @@ declare namespace ContentPostRequest {
         };
     }
     export interface EditRequest {
-        postUUID: string;
-        pictureUrls: string[];
-        videoUrls?: string[];
-        userID: string;
         caption?: string;
-        hashTags: any[];
-        taggedUsers: [];
-        visibility: number;
-        underEighteen: boolean;
+        hashTags?: any[];
+        taggedUsers?: [];
+        visibility?: number;
+        underEighteen?: boolean;
         warning?: number[];
-        categories: any[];
+        categories?: any[];
         season?: any;
-        textCommentsEnabled: boolean;
-        voiceComments: {
+        textCommentsEnabled?: boolean;
+        voiceComments?: {
             enabled: boolean;
             amount: number;
         };
-        doubleMonetisations: {
+        doubleMonetisations?: {
             enabled: boolean;
             amount: number;
         };

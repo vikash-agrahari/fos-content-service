@@ -84,6 +84,16 @@ const contentSeasonSchema = new Schema(
     { _id: false }
 );
 
+const taggedUsersSchema = new Schema(
+    {
+        userId: { type: Schema.Types.ObjectId, ref: COLLECTION.USER },
+        profileImage: { type: String },
+        name: { type: String },
+        username: { type: String },
+    },
+    { _id: false }
+);
+
 const contentPostSchema: Schema<IContentPost> = new Schema<IContentPost>(
     {
         _id: { type: Schema.Types.ObjectId, required: true, auto: true },
@@ -96,15 +106,7 @@ const contentPostSchema: Schema<IContentPost> = new Schema<IContentPost>(
             type: [hashTagSchema],
             validate: [arrayLimitValidator, '{PATH} exceeds the limit of 6'],
         },
-        taggedUsers: [
-            {
-                userId: { type: Schema.Types.ObjectId, ref: COLLECTION.USER },
-                profileImage: { type: String },
-                name: { type: String },
-                username: { type: String },
-            },
-            { _id: false },
-        ],
+        taggedUsers: [taggedUsersSchema],
         visibility: { type: Number, required: true, enum: CONTENT_VISIBILITY },
         underEighteen: { type: Boolean, required: true },
         warning: [{ type: Number, enum: CONTENT_WARNING }],

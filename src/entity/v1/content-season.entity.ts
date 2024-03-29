@@ -9,6 +9,11 @@ class ContentSeasonEntity extends BaseEntity {
         const newSeason = await this.saveData(data);
         return newSeason;
     }
+
+    async getSeasonByName(seasonName: string) {
+        const data = await this.findOne({ seasonName: seasonName });
+        return data;
+    }
 }
 
 export const contentSeasonEntityV1 = new ContentSeasonEntity();
