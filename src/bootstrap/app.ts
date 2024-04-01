@@ -5,6 +5,7 @@ import { Config } from '../interfaces/config';
 import * as dotenv from 'dotenv';
 import { i18nLocale } from '../providers/locale/locale.service';
 import { InvalidRoute } from '../middlewares';
+import { routes } from '../routes/routes';
 dotenv.config();
 export class App {
     private app: Express;
@@ -38,7 +39,7 @@ export class App {
      * @description Load All Routes
      */
     private loadRoutes() {
-        //  this.app.use(this.contextPath, routes.loadAllRoutes());
+        this.app.use('/', routes.loadAllRoutes());
         this.app.use(InvalidRoute);
     }
 

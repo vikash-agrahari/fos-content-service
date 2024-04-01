@@ -1,5 +1,6 @@
 import { Server } from '@grpc/grpc-js';
 import { Router } from 'express';
+import { contentRouteV1 } from './content.route';
 
 class V1Routes {
     private route: Router;
@@ -20,8 +21,8 @@ class V1Routes {
      * @description Load All V1 User activity Routes
      */
     loadAllRoutes() {
-        // this.route.use('/', homeRouteV1.loadHomeRoutes());
-        // return this.route;
+        this.route.use('/content', contentRouteV1.loadContentRoutes());
+        return this.route;
     }
 }
 

@@ -2,8 +2,8 @@ import { Schema, Document, Types } from 'mongoose';
 import { mongo } from '../providers/database/mongo.connection';
 import { CONTENT_VISIBILITY, COLLECTION, CONTENT_WARNING, REPORT_STATUS } from '../interfaces/enum';
 
-interface HashTag {
-    _id: Types.ObjectId;
+export interface HashTag {
+    _id: string;
     hashtag: string;
 }
 
@@ -29,7 +29,7 @@ interface ContentSeason {
 export interface IContentPost extends Document {
     _id: Types.ObjectId;
     postUUID: string;
-    pictureUrls?: string[];
+    pictureUrls: string[];
     videoUrls?: string[];
     userID: Types.ObjectId;
     caption?: string;
@@ -84,11 +84,21 @@ const contentSeasonSchema = new Schema(
     { _id: false }
 );
 
+const taggedUsersSchema = new Schema(
+    {
+        userId: { type: Schema.Types.ObjectId, ref: COLLECTION.USER },
+        profileImage: { type: String },
+        name: { type: String },
+        username: { type: String },
+    },
+    { _id: false }
+);
+
 const contentPostSchema: Schema<IContentPost> = new Schema<IContentPost>(
     {
         _id: { type: Schema.Types.ObjectId, required: true, auto: true },
         postUUID: { type: String, required: true, unique: true },
-        pictureUrls: [{ type: String }],
+        pictureUrls: [{ type: String, required: true }],
         videoUrls: [{ type: String }],
         userID: { type: Schema.Types.ObjectId, ref: COLLECTION.USER },
         caption: { type: String },
@@ -96,15 +106,7 @@ const contentPostSchema: Schema<IContentPost> = new Schema<IContentPost>(
             type: [hashTagSchema],
             validate: [arrayLimitValidator, '{PATH} exceeds the limit of 6'],
         },
-        taggedUsers: [
-            {
-                userId: { type: Schema.Types.ObjectId, ref: COLLECTION.USER },
-                profileImage: { type: String },
-                name: { type: String },
-                username: { type: String },
-            },
-            { _id: false },
-        ],
+        taggedUsers: [taggedUsersSchema],
         visibility: { type: Number, required: true, enum: CONTENT_VISIBILITY },
         underEighteen: { type: Boolean, required: true },
         warning: [{ type: Number, enum: CONTENT_WARNING }],
@@ -151,4 +153,4 @@ function arrayLimitValidator(val: any[]) {
     return val.length <= 6;
 }
 
-export const ContentPostModel = mongo.getConnection().model<IContentPost>(COLLECTION.CONTENT_POST, contentPostSchema);
+export const contentPostModel = mongo.getConnection().model<IContentPost>(COLLECTION.CONTENT_POST, contentPostSchema);
