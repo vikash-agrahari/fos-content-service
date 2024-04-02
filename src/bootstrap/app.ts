@@ -9,8 +9,8 @@ import { routes } from '../routes/routes';
 dotenv.config();
 export class App {
     private app: Express;
-    private port: number = config.get(Config.USER_APP_PORT);
-    private contextPath: string = config.get(Config.USER_APP_CONTEXT_PATH);
+    private port: number = config.get(Config.APP_PORT);
+    private contextPath: string = config.get(Config.CONTENT_CONTEXT_PATH);
 
     constructor() {
         this.startApp();

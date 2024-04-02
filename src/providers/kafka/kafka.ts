@@ -38,8 +38,8 @@ export class KafkaManager {
                 topics: Object.values(KAFKA_CONFIG.TOPICS),
             };
             console.log('Creating', topicConfig);
-            const res = await this.admin.createTopics(topicConfig);
-            console.log('Kafka Topic Creation ::', res);
+            // const res = await this.admin.createTopics(topicConfig);
+            // console.log('Kafka Topic Creation ::', res);
         } catch (error) {
             console.error('Kafka Error Topic Creation', error);
         }

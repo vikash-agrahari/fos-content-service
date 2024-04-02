@@ -126,12 +126,6 @@ export enum AuthStrategy {
     BEARER = 'Bearer',
 }
 
-export enum DeviceType {
-    IOS = 'IOS',
-    ANDROID = 'ANDROID',
-    WEB = 'WEB',
-}
-
 export enum UserStatus {
     ACTIVE = 'ACTIVE',
     BLOCKED = 'BLOCKED',
@@ -181,8 +175,7 @@ export enum COLLECTION {
     HASHTAG = 'hashtags',
     CONTENT_CATEGORY = 'content-categories',
     CONTENT_SEASON = 'content-seasons',
-    LIKES = 'likes',
-    COMMENTS = 'comments',
+    CONTENT_REACTION = 'content-reactions',
 }
 
 export enum SCHEDULE_STATUS {

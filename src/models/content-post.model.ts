@@ -56,6 +56,8 @@ export interface IContentPost extends Document {
     likesCount?: number;
     likes?: string[];
     comments?: string[];
+    reactions?: string;
+    commentsCount?: string;
 }
 
 const hashTagSchema = new Schema(
@@ -129,18 +131,11 @@ const contentPostSchema: Schema<IContentPost> = new Schema<IContentPost>(
         viewCount: { type: Number, default: 0 },
         sharedCount: { type: Number, default: 0 },
         likesCount: { type: Number, default: 0 },
-        likes: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: COLLECTION.USER,
-            },
-        ],
-        comments: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: COLLECTION.COMMENTS,
-            },
-        ],
+        commentsCount: { type: Number, default: 0 },
+        reactions: {
+            type: Schema.Types.ObjectId,
+            ref: COLLECTION.CONTENT_REACTION,
+        },
     },
     {
         versionKey: false,

@@ -11,15 +11,6 @@ export interface GrpcResponse extends Response {
     data: string;
     error: string;
 }
-
-export interface INODEMAILER_CONFIG {
-    service: string;
-    auth: {
-        user: string;
-        pass: string;
-    };
-}
-
 export interface Message {
     message: string | null;
 }
