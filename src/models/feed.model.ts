@@ -1,6 +1,6 @@
 import { Schema, Document, Types } from 'mongoose';
 import { mongo } from '../providers/database/mongo.connection';
-import { CONTENT_VISIBILITY, COLLECTION, CONTENT_WARNING, REPORT_STATUS } from '../interfaces/enum';
+import { CONTENT_VISIBILITY, COLLECTION, CONTENT_WARNING, REPORT_STATUS, FEED_TYPE } from '../interfaces/enum';
 
 export interface HashTag {
     _id: string;
@@ -14,21 +14,21 @@ interface TaggedUser {
     username: string;
 }
 
-interface ContentCategory {
+interface FeedCategory {
     _id: Types.ObjectId;
     categoryName: string;
 }
 
-interface ContentSeason {
+interface FeedSeason {
     _id: Types.ObjectId;
     seasonName: string;
     monetisationsEnabled: boolean;
     amount: number;
 }
 
-export interface IContentPost extends Document {
+export interface IFeed extends Document {
     _id: Types.ObjectId;
-    postUUID: string;
+    feedType: number;
     pictureUrls: string[];
     videoUrls?: string[];
     userID: Types.ObjectId;
@@ -38,8 +38,8 @@ export interface IContentPost extends Document {
     visibility: number;
     underEighteen: boolean;
     warning?: number[];
-    categories: ContentCategory[];
-    season?: ContentSeason;
+    categories: FeedCategory[];
+    season?: FeedSeason;
     textCommentsEnabled: boolean;
     voiceComments: {
         enabled: boolean;
@@ -68,17 +68,17 @@ const hashTagSchema = new Schema(
     { _id: false }
 );
 
-const contentCategorySchema = new Schema(
+const feedCategorySchema = new Schema(
     {
-        _id: { type: Schema.Types.ObjectId, ref: COLLECTION.CONTENT_CATEGORY },
+        _id: { type: Schema.Types.ObjectId, ref: COLLECTION.FEED_CATEGORY },
         categoryName: { type: String },
     },
     { _id: false }
 );
 
-const contentSeasonSchema = new Schema(
+const feedSeasonSchema = new Schema(
     {
-        _id: { type: Schema.Types.ObjectId, ref: COLLECTION.CONTENT_SEASON },
+        _id: { type: Schema.Types.ObjectId, ref: COLLECTION.FEED_SEASON },
         seasonName: { type: String },
         monetisationsEnabled: { type: Boolean, default: false },
         amount: { type: Number },
@@ -96,27 +96,25 @@ const taggedUsersSchema = new Schema(
     { _id: false }
 );
 
-const contentPostSchema: Schema<IContentPost> = new Schema<IContentPost>(
+const feedSchema: Schema<IFeed> = new Schema<IFeed>(
     {
-        _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-        postUUID: { type: String, required: true, unique: true },
+        _id: { type: Schema.Types.ObjectId, required: true, unique: true, auto: true },
+        feedType: { type: Schema.Types.Number, required: true, enum: FEED_TYPE },
         pictureUrls: [{ type: String, required: true }],
         videoUrls: [{ type: String }],
         userID: { type: Schema.Types.ObjectId, ref: COLLECTION.USER },
         caption: { type: String },
         hashTags: {
             type: [hashTagSchema],
-            validate: [arrayLimitValidator, '{PATH} exceeds the limit of 6'],
         },
         taggedUsers: [taggedUsersSchema],
         visibility: { type: Number, required: true, enum: CONTENT_VISIBILITY },
         underEighteen: { type: Boolean, required: true },
         warning: [{ type: Number, enum: CONTENT_WARNING }],
         categories: {
-            type: [contentCategorySchema],
-            validate: [arrayLimitValidator, '{PATH} exceeds the limit of 6'],
+            type: [feedCategorySchema],
         },
-        season: { type: contentSeasonSchema },
+        season: { type: feedSeasonSchema },
         textCommentsEnabled: { type: Boolean, default: false },
         voiceComments: {
             enabled: { type: Boolean, default: false },
@@ -134,18 +132,14 @@ const contentPostSchema: Schema<IContentPost> = new Schema<IContentPost>(
         commentsCount: { type: Number, default: 0 },
         reactions: {
             type: Schema.Types.ObjectId,
-            ref: COLLECTION.CONTENT_REACTION,
+            ref: COLLECTION.FEED_REACTION,
         },
     },
     {
         versionKey: false,
-        collection: COLLECTION.CONTENT_POST,
+        collection: COLLECTION.FEED,
         timestamps: true,
     }
 );
 
-function arrayLimitValidator(val: any[]) {
-    return val.length <= 6;
-}
-
-export const contentPostModel = mongo.getConnection().model<IContentPost>(COLLECTION.CONTENT_POST, contentPostSchema);
+export const feedModel = mongo.getConnection().model<IFeed>(COLLECTION.FEED, feedSchema);

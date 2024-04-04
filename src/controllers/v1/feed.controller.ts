@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
 import { utils } from '../../providers/utils/utils';
 import { ExceptionMessage, HttpStatusMessage, SuccessMessage } from '../../interfaces/enum';
-import { contentCategoryEntityV1, contentPostEntityV1, contentSeasonEntityV1, hashTagEntityV1 } from '../../entity';
+import { feedCategoryEntityV1, feedPostEntityV1, feedSeasonEntityV1, hashTagEntityV1 } from '../../entity';
 import { CustomException } from '../../providers/utils/exception.utils';
 import { AcceptAny } from '../../interfaces/types';
-import { HashTag } from '../../models/content-post.model';
+import { HashTag } from '../../models/feed.model';
 
-class ContentPostController {
-    createPost = async (req: Request, res: Response) => {
+class FeedController {
+    createFeed = async (req: Request, res: Response) => {
         try {
-            const payload: ContentPostRequest.CreateRequest = req.body;
+            const payload: FeedRequest.CreateRequest = req.body;
 
             // Check if post with the provided UUID already exists
-            const existingPost = await contentPostEntityV1.findPostByUUID(payload.postUUID);
+            const existingPost = await feedPostEntityV1.findPostByUUID(payload.feedUUID);
             if (existingPost) {
                 throw new CustomException(ExceptionMessage.POST_ALREADY_CREATED, HttpStatusMessage.CONFLICT).getError();
             }
@@ -49,7 +49,7 @@ class ContentPostController {
             }
 
             // Add post
-            const postData: AcceptAny = await contentPostEntityV1.addPost(payload);
+            const postData: AcceptAny = await feedPostEntityV1.addPost(payload);
 
             const finalResponse = utils.response.successResponse(res, { _id: postData?._id }, SuccessMessage.POST_CREATED_SUCCESSFULLY);
             res.status(finalResponse.code).send(finalResponse);
@@ -59,17 +59,17 @@ class ContentPostController {
         }
     };
 
-    editPost = async (req: Request, res: Response) => {
+    editFeed = async (req: Request, res: Response) => {
         try {
-            const payload: ContentPostRequest.EditRequest = req.body;
-            const postUUID: string = req.params.UUID;
+            const payload: FeedRequest.EditRequest = req.body;
+            const feedUUID: string = req.params.uuid;
 
             const keyField = Object.keys(payload);
             if (keyField.length > 1) {
                 throw new CustomException(ExceptionMessage.INVALID_REQUEST, HttpStatusMessage.BAD_REQUEST).getError();
             }
             // Check if post with the provided UUID exists
-            const postData = await contentPostEntityV1.findPostByUUID(postUUID);
+            const postData = await feedPostEntityV1.findPostByUUID(feedUUID);
             if (!postData) {
                 throw new CustomException(ExceptionMessage.POST_NOT_FOUND, HttpStatusMessage.BAD_REQUEST).getError();
             }
@@ -90,11 +90,11 @@ class ContentPostController {
                     }
                     break;
                 default:
-                    await contentPostEntityV1.updatePost(postUUID, payload);
+                    await feedPostEntityV1.updatePost(feedUUID, payload);
             }
 
             //finally  send back the updated data of the Post
-            await contentPostEntityV1.updatePost(postUUID, payload);
+            await feedPostEntityV1.updatePost(feedUUID, payload);
 
             async function updateHashTags(hashTags: AcceptAny, postData: AcceptAny) {
                 const existingHashtags = postData.hashTags.map((tag: { hashtag: AcceptAny }) => tag.hashtag);
@@ -135,7 +135,7 @@ class ContentPostController {
         // Check if categories are valid
         if (categories && categories.length > 0) {
             for (const element of categories) {
-                const isValid = await contentCategoryEntityV1.getCategoryById(element._id);
+                const isValid = await feedCategoryEntityV1.getCategoryById(element._id);
                 if (!isValid) {
                     throw new CustomException(ExceptionMessage.INVALID_CATEGORY, HttpStatusMessage.BAD_REQUEST).getError();
                 }
@@ -144,17 +144,17 @@ class ContentPostController {
     }
 
     private async addNewSeason(season: AcceptAny): Promise<void> {
-        const isExists = await contentSeasonEntityV1.getSeasonByName(season?.seasonName);
+        const isExists = await feedSeasonEntityV1.getSeasonByName(season?.seasonName);
         if (isExists) {
             return { ...season, _id: isExists._id };
         }
-        const seasonData = await contentSeasonEntityV1.addSeason(season);
+        const seasonData = await feedSeasonEntityV1.addSeason(season);
         return { ...season, _id: seasonData._id };
     }
-    // getContent = async (req: Request, res: Response) => {
+    // getFeed = async (req: Request, res: Response) => {
     //     try {
     //         const payload = req.query;
-    //         const data = await contentEntityV1.getContent(payload);
+    //         const data = await feedEntityV1.getFeed(payload);
     //         const finalResponse = utils.response.successResponse(res, data, SuccessMessage.CONTENT_GET_SUCCESSFULLY);
     //         res.status(finalResponse.code).send(finalResponse);
     //     } catch (error) {
@@ -163,10 +163,10 @@ class ContentPostController {
     //     }
     // };
 
-    // getContentDetail = async (req: Request, res: Response) => {
+    // getFeedDetail = async (req: Request, res: Response) => {
     //     try {
     //         const payload = req.query;
-    //         const data = await contentEntityV1.contentDetail({ _id: payload.contentId as string });
+    //         const data = await feedEntityV1.feedDetail({ _id: payload.feedId as string });
     //         const finalResponse = utils.response.successResponse(res, data, SuccessMessage.SUCCESS);
     //         res.status(finalResponse.code).send(finalResponse);
     //     } catch (error) {
@@ -176,4 +176,4 @@ class ContentPostController {
     // };
 }
 
-export const contentPostControllerV1 = new ContentPostController();
+export const feedControllerV1 = new FeedController();

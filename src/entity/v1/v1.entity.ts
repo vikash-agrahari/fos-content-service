@@ -1,4 +1,4 @@
-export { contentPostEntityV1 } from './content-post.entity';
-export { contentSeasonEntityV1 } from './content-season.entity';
-export { contentCategoryEntityV1 } from './content-category.entity';
+export { feedPostEntityV1 } from './feed.entity';
+export { feedSeasonEntityV1 } from './feed-season.entity';
+export { feedCategoryEntityV1 } from './feed-category.entity';
 export { hashTagEntityV1 } from './hashTag.entity';

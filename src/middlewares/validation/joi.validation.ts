@@ -5,6 +5,7 @@
 
 import Joi from 'joi';
 import { DATABASE } from '../../common/constants';
+import { FEED_TYPE } from '../../interfaces/enum';
 
 export const CUSTOM_JOI = {
     LANG: Joi.string()
@@ -43,9 +44,10 @@ export const JOI_VALIDATION = {
         },
     },
     CONTENT: {
-        POST: {
+        FEED: {
             CREATE: {
-                postUUID: Joi.string().length(36).required(),
+                feedUUID: Joi.string().length(36).required(),
+                feedType: Joi.number().valid(FEED_TYPE).required(),
                 pictureUrls: Joi.array().items(Joi.string()).required(),
                 videoUrls: Joi.array().items(Joi.string()),
                 userID: Joi.string().length(24).required(),
@@ -85,7 +87,7 @@ export const JOI_VALIDATION = {
                 }).required(),
                 doubleMonetisations: Joi.object({
                     enabled: Joi.boolean().required(),
-                    amount: Joi.number().required(),
+                    amount: Joi.number().min(4.99).required(),
                 }).required(),
             },
             EDIT: {

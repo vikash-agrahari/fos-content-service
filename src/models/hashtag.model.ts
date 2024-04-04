@@ -1,4 +1,4 @@
-import { Schema, Document, Types } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 import { COLLECTION } from '../interfaces/enum';
 import { mongo } from '../providers/database/mongo.connection';
 

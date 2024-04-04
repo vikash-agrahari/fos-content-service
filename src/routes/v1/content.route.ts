@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { validate } from '../../middlewares/validation/validation';
 import Joi from 'joi';
 import { JOI_VALIDATION } from '../../middlewares/validation/joi.validation';
-import { contentPostControllerV1 } from '../../controllers/v1/v1.controller';
+import { feedControllerV1 } from '../../controllers/controller';
 
 class ContentRoute {
     private ContentRoute: Router;
@@ -11,9 +11,9 @@ class ContentRoute {
     }
 
     loadContentRoutes() {
-        this.ContentRoute.post('/post', validate.body(Joi.object(JOI_VALIDATION.CONTENT.POST.CREATE)), contentPostControllerV1.createPost);
+        this.ContentRoute.post('/feed', validate.body(Joi.object(JOI_VALIDATION.CONTENT.FEED.CREATE)), feedControllerV1.createFeed);
 
-        this.ContentRoute.put('/post/:UUID', validate.body(Joi.object(JOI_VALIDATION.CONTENT.POST.EDIT)), contentPostControllerV1.editPost);
+        this.ContentRoute.put('/feed/:uuid', validate.body(Joi.object(JOI_VALIDATION.CONTENT.FEED.EDIT)), feedControllerV1.editFeed);
 
         // this.ContentRoute.get(
         //     '/',

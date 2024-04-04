@@ -1,9 +1,9 @@
-import { contentSeasonModel } from '../../models/model';
+import { feedSeasonModel } from '../../models/model';
 import BaseEntity from '../base-mongo.entity';
 
-class ContentSeasonEntity extends BaseEntity {
+class FeedSeasonEntity extends BaseEntity {
     constructor() {
-        super(contentSeasonModel);
+        super(feedSeasonModel);
     }
     async addSeason(data: any) {
         const newSeason = await this.saveData(data);
@@ -16,4 +16,4 @@ class ContentSeasonEntity extends BaseEntity {
     }
 }
 
-export const contentSeasonEntityV1 = new ContentSeasonEntity();
+export const feedSeasonEntityV1 = new FeedSeasonEntity();

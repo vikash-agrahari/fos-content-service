@@ -171,11 +171,11 @@ export enum SuccessMessage {
 
 export enum COLLECTION {
     USER = 'users',
-    CONTENT_POST = 'content-posts',
+    FEED = 'feeds',
     HASHTAG = 'hashtags',
-    CONTENT_CATEGORY = 'content-categories',
-    CONTENT_SEASON = 'content-seasons',
-    CONTENT_REACTION = 'content-reactions',
+    FEED_CATEGORY = 'feed-categories',
+    FEED_SEASON = 'feed-seasons',
+    FEED_REACTION = 'feed-reactions',
 }
 
 export enum SCHEDULE_STATUS {
@@ -206,4 +206,12 @@ export enum REPORT_STATUS {
     PENDING = 1,
     RESOLVED = 2,
     DELETE = 3,
+}
+
+export enum FEED_TYPE {
+    POST = 1,
+    VIDEO = 2,
+    THOUGHTS = 3,
+    MOMENTS = 4,
+    MOMENTS_FOLDER = 5,
 }

@@ -1,9 +1,9 @@
-import { contentCategoryModel } from '../../models/model';
+import { feedCategoryModel } from '../../models/model';
 import BaseEntity from '../base-mongo.entity';
 
-class ContentCategoryEntity extends BaseEntity {
+class FeedCategoryEntity extends BaseEntity {
     constructor() {
-        super(contentCategoryModel);
+        super(feedCategoryModel);
         //this.createBulkCategory(['movies', 'shopping', 'news', 'gaming']);
     }
     async getCategoryById(id: string) {
@@ -16,4 +16,4 @@ class ContentCategoryEntity extends BaseEntity {
     }
 }
 
-export const contentCategoryEntityV1 = new ContentCategoryEntity();
+export const feedCategoryEntityV1 = new FeedCategoryEntity();

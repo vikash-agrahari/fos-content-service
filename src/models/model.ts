@@ -1,4 +1,4 @@
-export { contentPostModel } from './content-post.model';
-export { contentCategoryModel } from './content-category.model';
-export { contentSeasonModel } from './content-season.model';
+export { feedModel } from './feed.model';
+export { feedCategoryModel } from './feed-category.model';
+export { feedSeasonModel } from './feed-season.model';
 export { hashTagModel } from './hashtag.model';

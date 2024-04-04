@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-namespace, @typescript-eslint/no-unused-vars
-declare namespace ContentPostRequest {
+declare namespace FeedRequest {
     export interface CreateRequest {
-        postUUID: string;
+        feedUUID: string;
         pictureUrls: string[];
         videoUrls?: string[];
         userID: string;

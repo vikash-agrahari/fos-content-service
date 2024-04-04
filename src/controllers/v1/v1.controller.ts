@@ -1,1 +1,1 @@
-export { contentPostControllerV1 } from './content-post.controller';
+export { feedControllerV1 } from './feed.controller';
